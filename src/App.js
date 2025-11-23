@@ -20,23 +20,16 @@ function App() {
   const [animationSpeed, setAnimationSpeed] = useState(1);
   const animationRef = useRef(null);
 
-  // 1. 데이터 로드 (여기가 핵심!)
+  // 1. 데이터 로드
   useEffect(() => {
-    // ⭐ process.env.PUBLIC_URL을 붙여서 경로를 자동으로 완성합니다.
-    const DATA_URL = `${process.env.PUBLIC_URL}/trips_data.json`;
-    
-    console.log("데이터 가지러 가는 주소:", DATA_URL); // 콘솔에서 주소 확인 가능
-
-    fetch(DATA_URL)
-      .then(resp => {
-          if (!resp.ok) throw new Error("파일을 못 찾겠어요 (404)");
-          return resp.json();
-      })
+    // 👇 이렇게 딱 한 줄로 주소를 넣으세요!
+    fetch('./trips_data.json')
+      .then(resp => resp.json())
       .then(data => {
         setTrips(data);
-        console.log("✅ 데이터 로드 성공:", data.length);
+        console.log("✅ 데이터 로드 완료:", data.length);
       })
-      .catch(err => console.error("❌ 데이터 로드 실패:", err));
+      .catch(err => console.error("데이터 로드 실패:", err));
   }, []);
 
   // 2. 애니메이션 루프
